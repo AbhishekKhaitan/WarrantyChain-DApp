@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WarrantyChain – Blockchain Product Warranties</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">⛓</span>
+      <div>
+        <h1>WarrantyChain</h1>
+        <p class="tagline">Tamper-proof, transferable product warranties</p>
+      </div>
+    </div>
+    <div class="wallet">
+      <span id="networkBadge" class="badge muted">Not connected</span>
+      <span id="roleBadge" class="badge hidden"></span>
+      <span id="accountLabel" class="mono"></span>
+      <button id="connectBtn" class="btn primary">Connect MetaMask</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Contract overview (blockchain data retrieval) -->
+    <section class="card" id="overview">
+      <div class="card-head">
+        <h2>Contract overview</h2>
+        <button id="refreshBtn" class="btn small" disabled>Refresh</button>
+      </div>
+      <div class="stats">
+        <div class="stat"><span class="label">Brand</span><span id="statBrand" class="value">–</span></div>
+        <div class="stat"><span class="label">Manufacturer</span><span id="statOwner" class="value mono">–</span></div>
+        <div class="stat"><span class="label">Max warranty</span><span id="statMax" class="value">–</span></div>
+        <div class="stat"><span class="label">Warranties issued</span><span id="statTotal" class="value">–</span></div>
+        <div class="stat"><span class="label">Claims filed</span><span id="statClaims" class="value">–</span></div>
+        <div class="stat"><span class="label">Contract</span><span id="statAddress" class="value mono">–</span></div>
+      </div>
+    </section>
+
+    <div class="grid">
+      <!-- Verify (anyone) -->
+      <section class="card">
+        <h2>Verify a warranty</h2>
+        <p class="hint">Anyone can check a product's warranty using its serial number.</p>
+        <form id="verifyForm">
+          <label>Serial number<input id="verifySerial" required placeholder="e.g. SN-1001" /></label>
+          <button class="btn primary" type="submit">Verify</button>
+        </form>
+        <div id="verifyResult" class="result hidden"></div>
+      </section>
+
+      <!-- My warranties -->
+      <section class="card">
+        <div class="card-head">
+          <h2>My warranties</h2>
+          <button id="loadMineBtn" class="btn small" disabled>Load</button>
+        </div>
+        <p class="hint">Warranties currently held by the connected account.</p>
+        <ul id="myList" class="list"><li class="muted">Connect your wallet to load.</li></ul>
+      </section>
+
+      <!-- Retailer -->
+      <section class="card role-retailer">
+        <h2>Issue warranty <span class="tag">Retailer</span></h2>
+        <form id="issueForm">
+          <label>Serial number<input id="issueSerial" required placeholder="SN-1001 (4-32 chars)" /></label>
+          <label>Product model<input id="issueModel" required placeholder="Acme X200 Laptop" /></label>
+          <label>Buyer address<input id="issueBuyer" required placeholder="0x…" class="mono" /></label>
+          <label>Duration (days)<input id="issueDays" type="number" required value="365" /></label>
+          <button class="btn primary" type="submit">Issue warranty</button>
+        </form>
+      </section>
+
+      <!-- Holder -->
+      <section class="card role-holder">
+        <h2>Transfer warranty <span class="tag">Holder</span></h2>
+        <p class="hint">Selling the product? Move the warranty to the new owner.</p>
+        <form id="transferForm">
+          <label>Serial number<input id="transferSerial" required /></label>
+          <label>New holder address<input id="transferTo" required placeholder="0x…" class="mono" /></label>
+          <button class="btn primary" type="submit">Transfer</button>
+        </form>
+      </section>
+
+      <section class="card role-holder">
+        <h2>File a service claim <span class="tag">Holder</span></h2>
+        <form id="claimForm">
+          <label>Serial number<input id="claimSerial" required /></label>
+          <label>Issue description<textarea id="claimIssue" required rows="2" placeholder="Screen flickers after boot (5-200 chars)"></textarea></label>
+          <button class="btn primary" type="submit">File claim</button>
+        </form>
+      </section>
+
+      <!-- Manufacturer -->
+      <section class="card role-owner">
+        <h2>Manage retailers <span class="tag owner">Manufacturer</span></h2>
+        <form id="retailerForm">
+          <label>Retailer address<input id="retailerAddr" required placeholder="0x…" class="mono" /></label>
+          <div class="row">
+            <button class="btn primary" type="submit" data-auth="true">Authorize</button>
+            <button class="btn danger" type="submit" data-auth="false">Revoke</button>
+          </div>
+        </form>
+        <form id="checkRetailerForm" class="inline">
+          <input id="checkRetailerAddr" placeholder="Check address is retailer…" class="mono" />
+          <button class="btn small" type="submit">Check</button>
+        </form>
+        <div id="retailerResult" class="hint"></div>
+      </section>
+
+      <section class="card role-owner">
+        <h2>Resolve claim <span class="tag owner">Manufacturer</span></h2>
+        <form id="resolveForm">
+          <label>Claim ID<input id="resolveId" type="number" min="1" required /></label>
+          <div class="row">
+            <button class="btn primary" type="submit" data-approve="true">Approve</button>
+            <button class="btn danger" type="submit" data-approve="false">Reject</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card role-owner">
+        <h2>Void warranty <span class="tag owner">Manufacturer</span></h2>
+        <p class="hint">For counterfeit products or fraudulent registrations.</p>
+        <form id="voidForm">
+          <label>Serial number<input id="voidSerial" required /></label>
+          <label>Reason<input id="voidReason" required placeholder="Counterfeit unit" /></label>
+          <button class="btn danger" type="submit">Void warranty</button>
+        </form>
+      </section>
+    </div>
+
+    <!-- Transaction log -->
+    <section class="card">
+      <div class="card-head">
+        <h2>Transaction log</h2>
+        <button id="clearLogBtn" class="btn small">Clear</button>
+      </div>
+      <ul id="txLog" class="log"></ul>
+    </section>
+  </main>
+
+  <footer>WarrantyChain DApp · Solidity + Ethers.js + MetaMask</footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.4/ethers.umd.min.js"></script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+
+
+  WarrantyChain
+    Constructor
+      ✔ V1: sets brand, manufacturer, max days and authorises the manufacturer (89ms)
+      ✔ I1: rejects empty brand name
+      ✔ I2: rejects max warranty of 0 or > 3650 days
+    Valid inputs
+      ✔ V2: manufacturer authorises a retailer
+      ✔ V3: retailer issues a warranty and data is retrievable (43ms)
+      ✔ V4: holder transfers the warranty to a new owner
+      ✔ V5: holder files a claim and manufacturer approves it
+      ✔ V6: manufacturer voids a counterfeit warranty
+      ✔ V7: warranty becomes invalid after expiry
+    Invalid inputs
+      ✔ I3: duplicate serial number
+      ✔ I4: serial too short / too long
+      ✔ I5: empty product model
+      ✔ I6: zero buyer address and retailer buying from itself
+      ✔ I7: duration 0 or above maximum
+      ✔ I8: unknown serial lookup
+      ✔ I9: claim description too short
+      ✔ I10: second claim while one is pending, and transfer while claim is open
+      ✔ I11: claim on an expired warranty
+      ✔ I12: claim on a voided warranty / void twice
+      ✔ I13: resolving a non-existent or already resolved claim
+      ✔ I14: transfer to zero address or to self
+    Unauthorised access
+      ✔ U1: non-retailer cannot issue a warranty
+      ✔ U2: revoked retailer can no longer issue
+      ✔ U3: non-manufacturer cannot authorise retailers
+      ✔ U4: non-holder cannot transfer someone else's warranty
+      ✔ U5: previous holder cannot file claims after transfer
+      ✔ U6: non-manufacturer cannot resolve claims or void warranties
+
+
+  27 passing (2s)
+

@@ -1,0 +1,17 @@
+{
+  "name": "warrantychain-dapp",
+  "version": "1.0.0",
+  "description": "Blockchain-based transferable product warranty DApp",
+  "private": true,
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "export-abi": "node scripts/export-abi.js",
+    "serve": "npx http-server frontend -p 8080 -c-1"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "hardhat": "^2.29.1"
+  }
+}

@@ -1,0 +1,168 @@
+:root {
+  --bg: #f4f6fb;
+  --card: #ffffff;
+  --text: #1c2333;
+  --muted: #6b7489;
+  --border: #e1e5ef;
+  --primary: #3d5afe;
+  --primary-dark: #2a3fd1;
+  --danger: #e5484d;
+  --ok: #1f9d55;
+  --warn: #c27c0e;
+  --radius: 12px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.45;
+}
+
+.mono { font-family: Consolas, "Courier New", monospace; font-size: 0.9em; }
+.muted { color: var(--muted); }
+.hidden { display: none !important; }
+
+/* Top bar */
+.topbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 28px;
+  background: linear-gradient(120deg, #1a237e, #3d5afe);
+  color: #fff;
+}
+.brand { display: flex; gap: 12px; align-items: center; }
+.logo { font-size: 2rem; }
+.brand h1 { margin: 0; font-size: 1.4rem; }
+.tagline { margin: 0; opacity: 0.85; font-size: 0.9rem; }
+.wallet { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.wallet .mono { background: rgba(255,255,255,0.15); padding: 4px 8px; border-radius: 6px; }
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: rgba(255,255,255,0.2);
+}
+.badge.ok { background: var(--ok); }
+.badge.owner { background: #ff9800; color: #1c2333; }
+.badge.retailer { background: #00bfa5; color: #1c2333; }
+.badge.customer { background: #e0e7ff; color: #1a237e; }
+
+main { max-width: 1200px; margin: 24px auto; padding: 0 16px; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+  margin: 16px 0;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  box-shadow: 0 1px 3px rgba(20, 30, 60, 0.05);
+}
+.card h2 { margin: 0 0 8px; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; }
+.card-head { display: flex; justify-content: space-between; align-items: center; }
+.hint { margin: 0 0 12px; color: var(--muted); font-size: 0.88rem; }
+
+.tag {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #e0f7f4;
+  color: #00796b;
+}
+.tag.owner { background: #fff3e0; color: #b45f06; }
+
+.stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px; margin-top: 8px; }
+.stat { background: var(--bg); border-radius: 8px; padding: 10px 12px; display: flex; flex-direction: column; overflow: hidden; }
+.stat .label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+.stat .value { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+form { display: flex; flex-direction: column; gap: 10px; }
+form.inline { flex-direction: row; margin-top: 12px; }
+form.inline input { flex: 1; }
+label { display: flex; flex-direction: column; font-size: 0.85rem; font-weight: 600; gap: 4px; }
+input, textarea {
+  font: inherit;
+  font-weight: 400;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fbfcfe;
+}
+input:focus, textarea:focus { outline: 2px solid #c5cdff; border-color: var(--primary); }
+.row { display: flex; gap: 8px; }
+.row .btn { flex: 1; }
+
+.btn {
+  font: inherit;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  border-radius: 8px;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn:hover { background: #f0f2f8; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn.primary { background: var(--primary); border-color: var(--primary); color: #fff; }
+.btn.primary:hover { background: var(--primary-dark); }
+.btn.danger { background: var(--danger); border-color: var(--danger); color: #fff; }
+.btn.small { padding: 4px 10px; font-size: 0.85rem; }
+.topbar .btn.primary { background: #fff; color: var(--primary); border-color: #fff; }
+
+.result { margin-top: 14px; padding: 12px; border-radius: 8px; background: var(--bg); font-size: 0.9rem; }
+.result.valid { border-left: 4px solid var(--ok); }
+.result.invalid { border-left: 4px solid var(--danger); }
+.result dl { display: grid; grid-template-columns: max-content 1fr; gap: 4px 12px; margin: 8px 0 0; }
+.result dt { color: var(--muted); }
+.result dd { margin: 0; word-break: break-all; }
+.status { font-weight: 700; }
+.status.valid { color: var(--ok); }
+.status.invalid { color: var(--danger); }
+
+.claims { margin-top: 10px; }
+.claims h4 { margin: 6px 0; font-size: 0.85rem; }
+.claim { padding: 6px 8px; border: 1px solid var(--border); border-radius: 6px; margin-bottom: 6px; background: #fff; }
+
+.list { list-style: none; margin: 0; padding: 0; }
+.list li { padding: 8px 10px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; gap: 8px; }
+.list li:last-child { border-bottom: none; }
+.list a { color: var(--primary); cursor: pointer; text-decoration: none; font-weight: 600; }
+
+.log { list-style: none; padding: 0; margin: 8px 0 0; max-height: 320px; overflow-y: auto; font-size: 0.85rem; }
+.log li { padding: 8px 10px; border-radius: 6px; margin-bottom: 6px; background: var(--bg); border-left: 4px solid var(--muted); word-break: break-all; }
+.log li.success { border-left-color: var(--ok); }
+.log li.error { border-left-color: var(--danger); }
+.log li.pending { border-left-color: var(--warn); }
+.log time { color: var(--muted); margin-right: 6px; }
+
+footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 20px; }
+
+/* Cards for roles the user doesn't have are dimmed, not hidden, so that
+   unauthorised attempts can still be demonstrated for testing. */
+.locked { opacity: 0.55; }
+.locked::after { content: "Your account does not have this role – the transaction will be rejected."; display: block; margin-top: 8px; font-size: 0.78rem; color: var(--danger); }
+
+@media (max-width: 600px) {
+  .topbar { padding: 14px 16px; }
+  main { padding: 0 12px; }
+}
+
+.topbar .badge.muted { color: #fff; opacity: 0.8; }
+.wallet .mono:empty { display: none; }
